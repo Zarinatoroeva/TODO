@@ -12,6 +12,14 @@ def test(requests):
 def second(requests):
     return HttpResponse("test 2 page")
 
-def third(requests):
-    return HttpResponse("This is page test 3")
-    
+def add_todo(requests):
+    form = request.POST
+    text = form["todo_text"]
+    todo = ToDo(text = text)
+    todo.save()
+    return redirect(test)
+
+def delete_todo(request, id):
+    todo = ToDo.objects.get(id=id)
+    todo.delete()
+    return redirect(test)
